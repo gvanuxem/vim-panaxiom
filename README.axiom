@@ -1,0 +1,34 @@
+This package is formed by the following files:
+
+.
+├── axiom
+│   ├── categories.vim
+│   ├── domains.vim
+│   ├── operations.vim
+│   └── packages.vim
+├── README.axiom
+├── axiom.vim
+└── pamphlet.vim
+
+These files provide syntax highlighting for axiom files.
+
+Since there are a lot of commands, domains, etc,  their syntax definition
+is saved in separated files so that the user can choose which fields have
+to be highlighted. These files are sourced by the main file, if they are
+not commented.
+Colors can be changed to your taste at the end of axiom.vim
+
+The files should be copied in your ~/.vim/syntax directory; after this, 
+to have syntax highlight in *.input and *.spad files, just add to your
+~/.vimrc file the line  
+
+au BufNewFile,BufRead *.input *.spad  exe "source ~/.vim/syntax/axiom.vim"
+
+For pamphlet file, you can have both latex highlight in latex text and
+axiom highlight in the "chunk" environment by adding
+
+au BufRead,BufNewFile *.pamphlet   setfiletype tex
+au BufRead,BufNewFile *.pamphlet   exe "source ~/.vim/syntax/pamphlet.vim"
+
+to your ~/.vimrc file.
+
