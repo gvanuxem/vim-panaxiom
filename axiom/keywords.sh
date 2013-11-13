@@ -23,17 +23,87 @@
 ## for vim.
 ###################################################################
 
-EXE="$1 -nosman"
+# Let's make a guess
+AXIOM=`find /usr/lib  -type d -iname "axiom-*"`
+# If you get error, set manually the following variable
+#export AXIOM="/usr/lib/axiom-20120301"
+
+# Set the axiom command
+if [ "$1" = "axiom" ];
+then 
+	if [ ! -d $AXIOM ];
+	then
+		echo "Please edit the script and insert the correct value"
+		echo "for the Axiom directory in the \$AXIOM variable."
+		exit
+	fi
+	EXE="$AXIOM/bin/AXIOMsys -nosman"
+else 
+	EXE="$1 -nosman"
+fi
+
+# First generate syntax for keywords
+# Every sed line does the following
+
+# Remove garbage at the top
+# Remove garbage at the bottom
+# Squeeze spaces
+# Split output one word per line
+# Remove empty lines
+# Add the vim syntax commands
 keywords () {
     echo ")what $1" | $EXE \
-        | sed -n "1,/^$2/d;/^(/d;/^  /d;p" \
-        | while read l; do for w in $l; do \
-            echo "syn match ax$1 \"\\<$w\\>\""; \
-          done; done \
-        > $1.vim
+        | sed "1,/^(/d" \
+	| sed "/^(/d" \
+	| sed "s/\( \+\)/ /g" \
+	| sed "s/ /\n/g" \
+	| sed "/^$/d" \
+	| sed "s/\(^.*$\)/syn keyword ax$2 \1/" \
+	> $1.vim
 }
 
-keywords domains    '('
-keywords categories '('
-keywords packages   '('
-keywords operations 'Operations whose'
+keywords categories 	Category 
+keywords domains 	Domain    
+keywords packages 	Package   
+
+# Then generate syntax for regexps
+
+# First system commands
+# Every sed line does the following
+
+# Remove garbage at the top
+# Remove garbage at the bottom
+# Squeeze spaces
+# Split output one word per line
+# Remove empty lines
+# Add the vim syntax commands
+echo ")what comm" | $EXE \
+	| sed "1,/^(/d" \
+	| sed "/^ \+For more/,\$d" \
+	| sed "s/\( \+\)/ /g" \
+	| sed "s/ /\n/g" \
+	| sed "/^$/d" \
+	| sed "s/\(^.*$\)/syn match axCommand \"\\\\V)\1\\\\m\"/" \
+	> commands.vim
+
+# Now axiom operations
+# Every sed line does the following
+
+# Remove garbage at the top
+# Remove garbage at the bottom
+# Squeeze spaces
+# Split output one word per line
+# Remove empty lines
+# Add the vim syntax commands for axiom commands which are made up only by keywords
+# Escape all backslashes in axiom commands (there are 2 of them)
+# Add the vim syntax commands for axiom commands made by symbols
+echo ")what op" | $EXE \
+	| sed "1,/^Operations whose/d" \
+	| sed "/^  /,\$d" \
+	| sed "s/\( \+\)/ /g" \
+	| sed "s/ /\n/g" \
+	| sed "/^$/d" \
+	| sed "s/\(^[a-zA-Z].*$\)/syn keyword axOperation \1/" \
+	| sed "s/\\\\/\\\\\\\\/" \
+	| sed  "s/\(^[^s].*$\)/syn match axOperation \"\\\\V\1\\\\m\"/" \
+	> operations.vim
