@@ -30,7 +30,7 @@ AXIOM=`find /usr/lib  -type d -iname "axiom-*"`
 
 # Set the axiom command
 if [ "$1" = "axiom" ];
-then 
+then
 	if [ ! -d $AXIOM ];
 	then
 		echo "Please edit the script and insert the correct value"
@@ -38,7 +38,7 @@ then
 		exit
 	fi
 	EXE="$AXIOM/bin/AXIOMsys -nosman"
-else 
+else
 	EXE="$1 -nosman"
 fi
 
@@ -62,9 +62,9 @@ keywords () {
 	> $1.vim
 }
 
-keywords categories 	Category 
-keywords domains 	Domain    
-keywords packages 	Package   
+keywords categories 	Category
+keywords domains 	Domain
+keywords packages 	Package
 
 # Then generate syntax for regexps
 
