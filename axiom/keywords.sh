@@ -2,6 +2,7 @@
 ###################################################################
 ##
 ## Copyright (C) 2013  Ralf Hemmecke <ralf@hemmecke.org>
+## Copyright (C) 2013  Fabio Stumbo <stf@unife.it>
 ##
 ###################################################################
 ## This program is free software: you can redistribute it and/or modify
@@ -37,7 +38,7 @@ then
 		echo "for the Axiom directory in the \$AXIOM variable."
 		exit
 	fi
-	EXE="$AXIOM/bin/AXIOMsys -nosman"
+	EXE="$AXIOM/bin/AXIOMsys"
 else
 	EXE="$1 -nosman"
 fi
