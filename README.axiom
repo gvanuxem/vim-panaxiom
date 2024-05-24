@@ -22,13 +22,13 @@ The files should be copied in your ~/.vim/syntax directory; after this,
 to have syntax highlight in *.input and *.spad files, just add to your
 ~/.vimrc file the line  
 
-au BufNewFile,BufRead *.input *.spad  exe "source ~/.vim/syntax/axiom.vim"
+autocmd BufNewFile,BufRead *.input set filetype=fricas
+autocmd BufNewFile,BufRead *.spad set filetype=fricas
 
 For pamphlet file, you can have both latex highlight in latex text and
 axiom highlight in the "chunk" environment by adding
 
-au BufRead,BufNewFile *.pamphlet   setfiletype tex
-au BufRead,BufNewFile *.pamphlet   exe "source ~/.vim/syntax/pamphlet.vim"
+autocmd BufRead,BufNewFile *.pamphlet   set filetype=pamphlet
 
 to your ~/.vimrc file.
 
