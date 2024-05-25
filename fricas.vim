@@ -1,10 +1,12 @@
 " Vim syntax file
-" Language:	Axiom
+" Language:	Axiom/FriCAS
 " Maintainer:	Johannes L. Grabmeier, johannes.grabmeier@fh-deggendorf.de
-" Last Change:	2006-12-18
+" Last Change:	2024-12-18
+" Maintainer:	Grégory Vanuxem, g.vanuxem@gmail.com
+" Last Change:	2024-05-25
 
 
-"for Axiom
+"for FriCAS
 
 syntax clear
 syntax case match
@@ -19,7 +21,7 @@ elseif exists("b:current_syntax")
   finish
 endif
 
-" A bunch of useful Axiom keywords
+" A bunch of useful Axiom/FriCAS keywords
 syn keyword	axiomStatement	goto break return 
 syn keyword	axiomRepeat	while for do repeat
 syn keyword	axiomTodo	contained TODO FIXME XXX
@@ -1426,6 +1428,6 @@ syntax keyword	axiomDefinition		: :: := == ==> -> +->
   delcommand HiLink
 endif
 
-let b:current_syntax = "c"
+let b:current_syntax = "fricas"
 
 " vim: ts=8
